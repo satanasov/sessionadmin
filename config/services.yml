@@ -1,0 +1,12 @@
+parameters:
+    tables.sessionghost: %core.table_prefix%session_ghost
+
+services:
+    anavaro.sessionadmin.events:
+        class: anavaro\sessionadmin\event\main_listener
+        arguments:
+            - @dbal.conn
+            - @config
+            - %tables.sessionghost%
+        tags:
+            - { name: event.listener }
