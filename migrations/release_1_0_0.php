@@ -17,6 +17,21 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 			//set configs
 			array('config.add', array('sa_version', '1.0.0')),
 			array('config.add', array('sa_active_count', '0')),
+			// Add ACP Modules
+			array('module.add', array(
+				'acp',
+				'ACP_CAT_DOT_MODS',
+				'ACP_SESSION_GRP'
+			)),
+			array('module.add', array(
+				'acp',
+				'ACP_SESSION_GRP',
+				array(
+					'module_basename'	=> '\anavaro\sessionadmin\acp\acp_session_active_module',
+					'module_mode'		=> array('main'),
+					'module_auth'        => 'ext_anavaro/sessionadmin && acl_a_user',
+				)
+			)),
 		);
 	}
 

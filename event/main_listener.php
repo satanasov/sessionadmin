@@ -63,7 +63,7 @@ class main_listener implements EventSubscriberInterface
 	{
 		$sql = 'UPDATE ' . $this->ghost_table . '
 			SET session_page = \'expired\'
-			WHERE  session_time < ' . (time() - $this->config['session_length']) . ' AND (session_page <> \'ucp.php?mode=logout\' OR session_page <> \'expired\')';
+			WHERE  session_time < ' . (time() - $this->config['session_length']) . ' AND (session_page NOT LIKE \'ucp.php?mode=logout\' AND session_page NOT LIKE \'expired\')';
 		error_log($sql);
 		$this->db->sql_query($sql);
 		$affected_rows = $this->db->sql_affectedrows();

@@ -1,0 +1,34 @@
+<!-- INCLUDE overall_header.html -->
+
+<a id="maincontent"></a>
+
+<h1>{L_TITLE}</h1>
+
+<p>{L_EXPLAIN}</p>
+
+<table class="table1 zebra-table fixed-width-table">
+	<thead>
+	<tr>
+		<th style="width: 10%;">{L_USERNAME}</th>
+		<th style="width: 10%;">{L_IP}</th>
+		<th style="width: 10%;">{L_SESSION_START}</th>
+		<th style="width: 10%;">{L_SESSION_TIME}</th>
+		<th>{L_SESSION_PAGE}</th>
+		<th>{L_SESSION_BROWSER}</th>
+	</tr>
+	</thead>
+	<tbody>
+		<!-- BEGIN sessions_active -->
+			<tr>
+				<td>{sessions_active.USERNAME}</td>
+				<td>{sessions_active.USER_IP}</td>
+				<td>{sessions_active.SESSION_START}</td>
+				<td>{sessions_active.SESSION_TIME}</td>
+				<td>{sessions_active.SESSION_PAGE}</td>
+				<td>{sessions_active.SESSION_BROWSER}</td>
+			</tr>
+		<!-- END sessions_active -->
+	</tbody>
+	</table>
+
+<!-- INCLUDE overall_footer.html -->
