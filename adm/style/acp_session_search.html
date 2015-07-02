@@ -1,0 +1,99 @@
+<!-- INCLUDE overall_header.html -->
+
+<script language="Javascript" type="text/javascript">
+<!--
+// show / hide
+function ShowHide(id1, id2) {
+	  if (id1 != '') expMenu(id1);
+	  if (id2 != '') expMenu(id2);
+}
+function expMenu(id) {
+	var itm = null;
+	if (document.getElementById) {
+		itm = document.getElementById(id);
+	} else if (document.all){
+		itm = document.all[id];
+	} else if (document.layers){
+		itm = document.layers[id];
+	}
+	if (!itm) {
+		// do nothing
+	}
+	else if (itm.style) {
+		if (itm.style.display == "none") { itm.style.display = ""; }
+	else { itm.style.display = "none"; }
+	}
+	else { itm.visibility = "show"; }
+}
+//-->
+</script>
+
+<a id="maincontent"></a>
+
+<!-- IF S_SESSION_SEARCH_SELECT -->
+	<h1>{L_SESSION_SEARCH}</h1>
+
+	<p>{L_SESSION_SEARCH_EXPLAIN}</p>
+
+	<form id="session_search" method="post" action="{U_ACTION}">
+
+	<fieldset>
+		<legend>{L_SESSION_SEARCH_FOR}</legend>
+	<dl>
+		<dt><label for="username">{L_ENTER_USERNAME}{L_COLON}</label></dt>
+		<dd><input class="text medium" type="text" id="username" name="username" /></dd>
+		<dd><label><input type="radio" class="radio" id="username" name="case" value="username" /> {L_SELECT_USERNAME}</label></dd>
+		<dd><label><input type="radio" class="radio" id="userip" name="case" value="userip" /> {L_SELECT_IP}</label></dd>
+		<dd><label><input type="radio" class="radio" id="userid" name="case" value="userid" /> {L_SELECT_ID}</label></dd>
+	</dl>
+
+	<p class="quick">
+		<input type="submit" name="submituser" value="{L_SUBMIT}" class="button1" />
+	</p>
+	</fieldset>
+
+	</form>
+<!-- ELSEIF S_SESSION_SEARCH_USER -->
+	<h1>{L_SESSION_SEARCH}</h1>
+
+	<p>{L_SESSION_SEARCH_EXPLAIN}</p>
+	<fieldset>
+		<legend  onclick="ShowHide('list_open', 'list_closed')">{L_SESSION_SEARCH_USER_UNIQUE_IPS}</legend>
+	<dl style="display: none;" id="list_open">
+		<table class="table1 zebra-table fixed-width-table">
+			<!-- BEGIN user_ips -->
+				<tr>
+					<td>{user_ips.USER_IP}</td>
+				</tr>
+			<!-- END user_ips -->
+		</table>
+	</dl>
+	</fieldset>
+	
+	<fieldset>
+		<legend>{L_SESSION_SEARCH_SESSIONS}</legend>
+		<table class="table1 zebra-table fixed-width-table">
+	<thead>
+	<tr>
+		<th style="width: 10%;">{L_IP}</th>
+		<th style="width: 10%;">{L_SESSION_START}</th>
+		<th style="width: 10%;">{L_SESSION_TIME}</th>
+		<th>{L_SESSION_PAGE}</th>
+		<th>{L_SESSION_BROWSER}</th>
+	</tr>
+	</thead>
+	<tbody>
+		<!-- BEGIN sessions -->
+			<tr>
+				<td>{sessions.USER_IP}</td>
+				<td>{sessions.SESSION_START}</td>
+				<td>{sessions.SESSION_TIME}</td>
+				<td>{sessions.SESSION_PAGE}</td>
+				<td>{sessions.SESSION_BROWSER}</td>
+			</tr>
+		<!-- END sessions -->
+	</tbody>
+	</table>
+	</fieldset>
+<!-- ENDIF -->
+<!-- INCLUDE overall_footer.html -->

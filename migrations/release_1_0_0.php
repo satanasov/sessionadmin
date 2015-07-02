@@ -32,6 +32,15 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 					'module_auth'        => 'ext_anavaro/sessionadmin && acl_a_user',
 				)
 			)),
+			array('module.add', array(
+				'acp',
+				'ACP_SESSION_GRP',
+				array(
+					'module_basename'	=> '\anavaro\sessionadmin\acp\acp_session_search_module',
+					'module_mode'		=> array('main'),
+					'module_auth'        => 'ext_anavaro/sessionadmin && acl_a_user',
+				)
+			)),
 		);
 	}
 

@@ -58,11 +58,8 @@ class acp_session_active_module
 		{
 			$var['username'] = '<a class="username-coloured" style="color:#'.(isset($users_array[$var['user_id']]['colour']) ? $users_array[$var['user_id']]['colour'] : "000000") . '" href="' .append_sid($phpbb_root_path. 'memberlist.php?mode=viewprofile&u=' . $var['user_id']) . '" target="_blank">' . $users_array[$var['user_id']]['username'] .'</a>';
 			// Let's buttify page a bit
-			switch ($var['session_page'])
-			{
-				default:
-					$var['session_page'] = '<a href="' . append_sid($phpbb_root_path . $var['session_page']) . '" target="_blank">' . $var['session_page'] . '</a>';
-			}
+			$var['session_page'] = '<a href="' . append_sid($phpbb_root_path . $var['session_page']) . '" target="_blank">' . $var['session_page'] . '</a>';
+
 			$template->assign_block_vars('sessions_active', array(
 				'USERNAME'	=> $var['username'],
 				'USER_IP'	=> $var['session_ip'],
