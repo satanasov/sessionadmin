@@ -42,7 +42,7 @@ class acp_session_search_module
 					trigger_error($user->lang['NO_USER'] . adm_back_link($this->u_action), E_USER_WARNING);
 				}
 			case 'userid':
-				if (!$user_id)
+				if (!isset($user_id))
 				{
 					$user_id = $request->variable('username', '', true);
 					if ($user_id == '')

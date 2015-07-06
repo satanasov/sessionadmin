@@ -56,7 +56,7 @@ class acp_session_active_module
 		}
 		foreach ($output as $var)
 		{
-			$var['username'] = '<a class="username-coloured" style="color:#'.(isset($users_array[$var['user_id']]['colour']) ? $users_array[$var['user_id']]['colour'] : "000000") . '" href="' .append_sid($phpbb_root_path. 'memberlist.php?mode=viewprofile&u=' . $var['user_id']) . '" target="_blank">' . $users_array[$var['user_id']]['username'] .'</a>';
+			$var['username'] = '<a class="username-coloured" style="color:#'.(isset($users_array[$var['user_id']]['colour']) ? $users_array[$var['user_id']]['colour'] : "000000") . '" href="' .append_sid($phpbb_root_path. 'memberlist.php?mode=viewprofile&u=' . $var['user_id']) . '" target="_blank">' . $users_array[$var['user_id']]['username'] .'</a> <a href="' . append_sid($phpbb_root_path. 'adm/index.php?i=-anavaro-sessionadmin-acp-acp_session_search_module&mode=main&case=userid&username=' . $var['user_id']) . '">v</a>';
 			// Let's buttify page a bit
 			$var['session_page'] = '<a href="' . append_sid($phpbb_root_path . $var['session_page']) . '" target="_blank">' . $var['session_page'] . '</a>';
 
