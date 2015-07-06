@@ -44,18 +44,10 @@ class main_listener implements EventSubscriberInterface
 	public function create_session_after($event)
 	{
 		// Let's first check if there are no active sessions realy 
-		if ($this->config['sa_active_count'] == 0)
-		{
-			$sql = 'SELECT COUNT(session_id) as count FROM ' . $this->ghost_table . ' WHERE session_page <> (\'expired\' OR \'ucp.php?mode=logout\')';
-			$result = $this->db->sql_query($sql);
-			$row = $this->db->sql_fetchrow($result);
-			$this->config->set('sa_active_count', $row['count']);
-		}
 		if ($event['session_data']['session_user_id'] != ANONYMOUS)
 		{
 			$sql = 'INSERT INTO ' . $this->ghost_table . ' ' . $this->db->sql_build_array('INSERT', $event['session_data']);
 			$this->db->sql_query($sql);
-			$this->config->increment('sa_active_count', 1);
 		}
 	}
 
@@ -66,8 +58,18 @@ class main_listener implements EventSubscriberInterface
 			WHERE  session_time < ' . (time() - $this->config['session_length']) . ' AND (session_page NOT LIKE \'ucp.php?mode=logout\' AND session_page NOT LIKE \'expired\')';
 		error_log($sql);
 		$this->db->sql_query($sql);
-		$affected_rows = $this->db->sql_affectedrows();
-		$this->config->increment('sa_active_count', ($affected_rows * -1));
+		// Let's clean BOTS (no need to hoard info for them)
+		$sql = 'SELECT user_id FROM ' . USERS_TABLE . ' WHERE group_id = 6';
+		$result = $this->db->sql_query($sql);
+		$clean_bots = array();
+		while ($row = $this->db->sql_fetchrow($result))
+		{
+			$clean_bots[] = $row['user_id'];
+		}
+		$this->db->sql_freeresult($result);
+		$sql = 'DELETE FROM ' . $this->ghost_table . ' WHERE ' . $this->db->sql_in_set('session_user_id', $clean_bots);
+		error_log($sql);
+		$this->db->sql_query($sql);
 	}
 
 	public function update_session($event)

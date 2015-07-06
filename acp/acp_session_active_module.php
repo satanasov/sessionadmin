@@ -23,7 +23,7 @@ class acp_session_active_module
 		$this->tpl_name		= 'acp_session_active';
 
 		$ouptut = $users = array();
-		$sql = 'SELECT * FROM phpbb_session_ghost WHERE session_page NOT LIKE \'expired\' AND session_page NOT LIKE \'ucp.php?mode=logout\' ORDER BY session_time';
+		$sql = 'SELECT * FROM phpbb_session_ghost WHERE session_page NOT LIKE \'expired\' AND session_page NOT LIKE \'ucp.php?mode=logout\' ORDER BY session_time DESC';
 		$result = $db->sql_query($sql);
 		while ($row = $db->sql_fetchrow($result))
 		{
@@ -44,7 +44,7 @@ class acp_session_active_module
 		$users_array = array();
 		$sql = 'SELECT user_id, username, user_colour
 				FROM ' . USERS_TABLE . '
-				WHERE group_id != 6 AND ' . $db->sql_in_set('user_id', $users) . '
+				WHERE ' . $db->sql_in_set('user_id', $users) . '
 				ORDER BY user_id ASC';
 		$result = $db->sql_query($sql);
 		while ($row = $db->sql_fetchrow($result)) {

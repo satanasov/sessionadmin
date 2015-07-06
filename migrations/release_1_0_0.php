@@ -16,7 +16,6 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 		return array(
 			//set configs
 			array('config.add', array('sa_version', '1.0.0')),
-			array('config.add', array('sa_active_count', '0')),
 			// Add ACP Modules
 			array('module.add', array(
 				'acp',
