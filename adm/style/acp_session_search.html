@@ -85,7 +85,49 @@ function expMenu(id) {
 	<tbody>
 		<!-- BEGIN sessions -->
 			<tr>
-				<td>{sessions.USER_IP}</td>
+				<td>{sessions.USER_IP} </td>
+				<td>{sessions.SESSION_START}</td>
+				<td>{sessions.SESSION_TIME}</td>
+				<td>{sessions.SESSION_PAGE}</td>
+				<td>{sessions.SESSION_BROWSER}</td>
+			</tr>
+		<!-- END sessions -->
+	</tbody>
+	</table>
+	</fieldset>
+<!-- ELSEIF S_SESSION_SEARCH_IP -->
+	<h1>{L_SESSION_SEARCH}</h1>
+
+	<p>{L_SESSION_SEARCH_EXPLAIN}</p>
+	<fieldset>
+		<legend  onclick="ShowHide('list_open', 'list_closed')">{L_SESSION_SEARCH_USER_UNIQUE_USERS}</legend>
+	<dl style="display: none;" id="list_open">
+		<table class="table1 zebra-table fixed-width-table">
+			<!-- BEGIN usernames -->
+				<tr>
+					<td>{usernames.USERNAME}</td>
+				</tr>
+			<!-- END usernames -->
+		</table>
+	</dl>
+	</fieldset>
+	
+	<fieldset>
+		<legend>{L_SESSION_SEARCH_SESSIONS}</legend>
+		<table class="table1 zebra-table fixed-width-table">
+	<thead>
+	<tr>
+		<th style="width: 10%;">{L_USERNAME}</th>
+		<th style="width: 10%;">{L_SESSION_START}</th>
+		<th style="width: 10%;">{L_SESSION_TIME}</th>
+		<th>{L_SESSION_PAGE}</th>
+		<th>{L_SESSION_BROWSER}</th>
+	</tr>
+	</thead>
+	<tbody>
+		<!-- BEGIN sessions -->
+			<tr>
+				<td>{sessions.USER_NAME}</td>
 				<td>{sessions.SESSION_START}</td>
 				<td>{sessions.SESSION_TIME}</td>
 				<td>{sessions.SESSION_PAGE}</td>

@@ -21,6 +21,10 @@ class acp_session_active_module
 		global $db, $user, $template, $config, $request, $table_prefix, $phpbb_root_path;
 
 		$this->tpl_name		= 'acp_session_active';
+		// Let's define image
+		$image = array(
+			'search'	=> '<img src="' . $phpbb_root_path . 'ext/anavaro/sessionadmin/adm/images/spyglass.png">',
+		);
 
 		$ouptut = $users = array();
 		$sql = 'SELECT * FROM phpbb_session_ghost WHERE session_page NOT LIKE \'expired\' AND session_page NOT LIKE \'ucp.php?mode=logout\' ORDER BY session_time DESC';
@@ -56,13 +60,13 @@ class acp_session_active_module
 		}
 		foreach ($output as $var)
 		{
-			$var['username'] = '<a class="username-coloured" style="color:#'.(isset($users_array[$var['user_id']]['colour']) ? $users_array[$var['user_id']]['colour'] : "000000") . '" href="' .append_sid($phpbb_root_path. 'memberlist.php?mode=viewprofile&u=' . $var['user_id']) . '" target="_blank">' . $users_array[$var['user_id']]['username'] .'</a> <a href="' . append_sid($phpbb_root_path. 'adm/index.php?i=-anavaro-sessionadmin-acp-acp_session_search_module&mode=main&case=userid&username=' . $var['user_id']) . '">v</a>';
+			$var['username'] = '<a class="username-coloured" style="color:#'.(isset($users_array[$var['user_id']]['colour']) ? $users_array[$var['user_id']]['colour'] : "000000") . '" href="' .append_sid($phpbb_root_path. 'memberlist.php?mode=viewprofile&u=' . $var['user_id']) . '" target="_blank">' . $users_array[$var['user_id']]['username'] .'</a> <a href="' . append_sid($phpbb_root_path. 'adm/index.php?i=-anavaro-sessionadmin-acp-acp_session_search_module&mode=main&case=userid&username=' . $var['user_id']) . '">' . $image['search'] . '</a>';
 			// Let's buttify page a bit
 			$var['session_page'] = '<a href="' . append_sid($phpbb_root_path . $var['session_page']) . '" target="_blank">' . $var['session_page'] . '</a>';
 
 			$template->assign_block_vars('sessions_active', array(
 				'USERNAME'	=> $var['username'],
-				'USER_IP'	=> $var['session_ip'],
+				'USER_IP'	=> '<a href="' . append_sid($phpbb_root_path. 'adm/index.php?i=-anavaro-sessionadmin-acp-acp_session_search_module&mode=main&case=userip&username=' . $var['session_ip']) .'">' . $var['session_ip'] . '</a>',
 				'SESSION_START'	=> $var['session_start'],
 				'SESSION_TIME'	=> $var['session_time'],
 				'SESSION_PAGE'	=> $var['session_page'],
