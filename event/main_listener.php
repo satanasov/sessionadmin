@@ -56,7 +56,6 @@ class main_listener implements EventSubscriberInterface
 		$sql = 'UPDATE ' . $this->ghost_table . '
 			SET session_page = \'expired\'
 			WHERE  session_time < ' . (time() - $this->config['session_length']) . ' AND (session_page NOT LIKE \'ucp.php?mode=logout\' AND session_page NOT LIKE \'expired\')';
-		error_log($sql);
 		$this->db->sql_query($sql);
 		// Let's clean BOTS (no need to hoard info for them)
 		$sql = 'SELECT user_id FROM ' . USERS_TABLE . ' WHERE group_id = 6';
@@ -68,7 +67,6 @@ class main_listener implements EventSubscriberInterface
 		}
 		$this->db->sql_freeresult($result);
 		$sql = 'DELETE FROM ' . $this->ghost_table . ' WHERE ' . $this->db->sql_in_set('session_user_id', $clean_bots);
-		error_log($sql);
 		$this->db->sql_query($sql);
 	}
 
