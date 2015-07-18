@@ -16,6 +16,11 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 		return array(
 			//set configs
 			array('config.add', array('sa_version', '1.0.0')),
+			array('config.add', array('sa_cur', '100000')),
+			array('config.add', array('sa_per_run', '200')),
+			array('config.add', array('sa_per_file', '10000')),
+			// Add text config - here we will store info about the cold storage
+			array('config_text.add', array('sa_info', '{}')),
 			// Add ACP Modules
 			array('module.add', array(
 				'acp',
@@ -36,6 +41,15 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 				'ACP_SESSION_GRP',
 				array(
 					'module_basename'	=> '\anavaro\sessionadmin\acp\acp_session_search_module',
+					'module_mode'		=> array('main'),
+					'module_auth'        => 'ext_anavaro/sessionadmin && acl_a_user',
+				)
+			)),
+			array('module.add', array(
+				'acp',
+				'ACP_SESSION_GRP',
+				array(
+					'module_basename'	=> '\anavaro\sessionadmin\acp\acp_session_storage_module',
 					'module_mode'		=> array('main'),
 					'module_auth'        => 'ext_anavaro/sessionadmin && acl_a_user',
 				)
@@ -69,6 +83,17 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 						'session_user_id'	=> array('INDEX', 'session_user_id'),
 					),
 				),
+				$this->table_prefix . 'session_archive'	=> array(
+					'COLUMNS'	=> array(
+						'user_id'	=> array('UINT', 0),
+						'user_ip'	=> array('VCHAR:40', ''),
+					),
+					'KEYS'	=> array(
+						'prmry'	=> array('UNIQUE', array('user_id', 'user_ip')),
+						'user_id'	=> array('INDEX', 'user_id'),
+						'user_ip'	=> array('INDEX', 'user_ip'),
+					),
+				),
 			),
 		);
 	}
@@ -77,6 +102,7 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 		return array(
 			'drop_tables'		=> array(
 				//$this->table_prefix . 'session_ghost',
+				//$this->table_prefix . 'session_archive',
 			),
 		);
 	}
