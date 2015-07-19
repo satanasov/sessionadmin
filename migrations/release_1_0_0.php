@@ -94,6 +94,15 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 						'user_ip'	=> array('INDEX', 'user_ip'),
 					),
 				),
+				$this->table_prefix . 'sessions_host'	=> array(
+					'COLUMNS'	=> array(
+						'ip'	=>  array('VCHAR:40', ''),
+						'hostname'	=>  array('MTEXT_UNI', ''),
+					),
+					'KEYS'	=> array(
+						'prmry'	=> array('UNIQUE', array('ip', 'hostname(255)')),
+					),
+				),
 			),
 		);
 	}
@@ -103,6 +112,7 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 			'drop_tables'		=> array(
 				//$this->table_prefix . 'session_ghost',
 				//$this->table_prefix . 'session_archive',
+				//$this->table_prefix . 'sessions_host',
 			),
 		);
 	}

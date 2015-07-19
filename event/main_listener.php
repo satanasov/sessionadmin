@@ -27,13 +27,17 @@ class main_listener implements EventSubscriberInterface
 
 	protected $db;
 	protected $config;
+	protected $user;
 	protected $ghost_table;
-	public function __construct(\phpbb\db\driver\driver_interface $db, \phpbb\config\config $config,
-	$ghost_table)
+	protected $hosts_table;
+	public function __construct(\phpbb\db\driver\driver_interface $db, \phpbb\config\config $config, \phpbb\user $user,
+	$ghost_table, $hosts_table)
 	{
 		$this->db = $db;
 		$this->config = $config;
+		$this->user = $user;
 		$this->ghost_table = $ghost_table;
+		$this->hosts_table = $hosts_table;
 	}
 
 	/**
@@ -44,10 +48,19 @@ class main_listener implements EventSubscriberInterface
 	public function create_session_after($event)
 	{
 		// Let's first check if there are no active sessions realy 
-		if ($event['session_data']['session_user_id'] != ANONYMOUS)
+		if ($event['session_data']['session_user_id'] != ANONYMOUS && $this->user->data['is_bot'])
 		{
 			$sql = 'INSERT INTO ' . $this->ghost_table . ' ' . $this->db->sql_build_array('INSERT', $event['session_data']);
 			$this->db->sql_query($sql);
+		}
+		if (!$this->user->data['is_bot'])
+		{
+			// We get the get host by address
+			$hostname = gethostbyaddr($event['session_data']['session_ip']);
+			if ($hostname != $event['session_data']['session_ip'])
+			{
+				$this->insert_in_db($event['session_data']['session_ip'], $hostname);
+			}
 		}
 	}
 
@@ -74,6 +87,30 @@ class main_listener implements EventSubscriberInterface
 	{
 		$sql = 'UPDATE ' . $this->ghost_table . ' SET ' . $this->db->sql_build_array('UPDATE', $event['session_data']) . "
 			WHERE session_id = '" . $this->db->sql_escape($event['session_id']) . "'";
+		$this->db->sql_query($sql);
+	}
+	
+	private function insert_in_db($IP, $hostname)
+	{
+		$db_layer = $this->db->get_sql_layer();
+		switch ($db_layer)
+		{
+			case 'mysql4':
+			case 'mysql':
+			case 'mssql':
+			case 'mssqlnative':
+			case 'oracle':
+				$sql = 'INSERT IGNORE INTO ' . $this->hosts_table . ' (ip, hostname) VALUES(\'' . $IP . '\', \'' . $hostname . '\')';
+			break;
+			case 'postgres':
+				$sql = 'INSERT INTO INTO ' . $this->hosts_table . ' (ip, hostname) SELECT \'' . $IP .'\',\'' . $hostname . '\' WHERE NOT EXISTS (SELECT 1 FROM INTO ' . $this->hosts_table . ' WHERE ip = \'' . $IP .'\' and hostname = \'' . $hostname . '\')';
+			break;
+			case 'sqlite':
+			case 'sqlite3':
+				$sql = 'INSERT OR IGNORE INTO INTO ' . $this->hosts_table . ' ip, hostname VALUES(\'' . $IP . '\', \'' . $hostname . '\')';
+			break;
+		}
+		var_dump($sql);
 		$this->db->sql_query($sql);
 	}
 }
