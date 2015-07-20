@@ -45,18 +45,25 @@ class acp_session_active_module
 		}
 		$db->sql_freeresult($result);
 		// Let's request some users
-		$users_array = array();
-		$sql = 'SELECT user_id, username, user_colour
-				FROM ' . USERS_TABLE . '
-				WHERE ' . $db->sql_in_set('user_id', $users) . '
-				ORDER BY user_id ASC';
-		$result = $db->sql_query($sql);
-		while ($row = $db->sql_fetchrow($result)) {
-			$users_array[$row['user_id']] = array(
-				'id'	=> $row['user_id'],
-				'username'	=> $row['username'],
-				'colour'	=> $row['user_colour'],
-			);
+		if (!empty($users))
+		{
+			$users_array = array();
+			$sql = 'SELECT user_id, username, user_colour
+					FROM ' . USERS_TABLE . '
+					WHERE ' . $db->sql_in_set('user_id', $users) . '
+					ORDER BY user_id ASC';
+			$result = $db->sql_query($sql);
+			while ($row = $db->sql_fetchrow($result)) {
+				$users_array[$row['user_id']] = array(
+					'id'	=> $row['user_id'],
+					'username'	=> $row['username'],
+					'colour'	=> $row['user_colour'],
+				);
+			}
+		}
+		else
+		{
+			trigger_error('NO_ACTIVE_SESSIONS_FOUND');
 		}
 		foreach ($output as $var)
 		{

@@ -48,7 +48,7 @@ class main_listener implements EventSubscriberInterface
 	public function create_session_after($event)
 	{
 		// Let's first check if there are no active sessions realy 
-		if ($event['session_data']['session_user_id'] != ANONYMOUS && $this->user->data['is_bot'])
+		if ($event['session_data']['session_user_id'] != ANONYMOUS && !$this->user->data['is_bot'])
 		{
 			$sql = 'INSERT INTO ' . $this->ghost_table . ' ' . $this->db->sql_build_array('INSERT', $event['session_data']);
 			$this->db->sql_query($sql);
@@ -110,7 +110,6 @@ class main_listener implements EventSubscriberInterface
 				$sql = 'INSERT OR IGNORE INTO INTO ' . $this->hosts_table . ' ip, hostname VALUES(\'' . $IP . '\', \'' . $hostname . '\')';
 			break;
 		}
-		var_dump($sql);
 		$this->db->sql_query($sql);
 	}
 }
