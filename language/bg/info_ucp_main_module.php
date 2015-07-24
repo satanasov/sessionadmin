@@ -23,16 +23,18 @@ if (empty($lang) || !is_array($lang))
 }
 
 $lang = array_merge($lang, array(
-	'UCP_ANAVARO_SESSION_ADMIN'	=> 'History',
-	'SESSION_ADMIN'	=> 'History',
+	'UCP_ANAVARO_SESSION_ADMIN'	=> 'История',
+	'SESSION_ADMIN'	=> 'История',
 
-	'UCP_HISTORY_TITLE'	=> 'History',
-	'UCP_HISTORY_EXPLAIN'	=> 'Here you could see actions relevant to your account - loged sessions, changed passwords, failed login attempts for the last 6 months',
+	'UCP_HISTORY_TITLE'	=> 'История',
+	'UCP_HISTORY_EXPLAIN'	=> 'Тук можете да видите действия свързани с вашия профил - влизания, адреси, смяна на паролата, както и неупешни опити за влизане',
 
-	'LAST_ACTION'	=> 'Last action',
+	'LAST_ACTION'	=> 'Последно действие',
 
-	'LOG_USER_NEW_PASSWORD'	=> 'Password changed',
-	'SESSION_EXPIRED'		=> 'Session expired',
-	'SESSION_LOGED_OUT'		=> 'Session loged out',
-	'LOGIN_ERROR_PASSWORD'	=> 'Incorrect password entered',
+	'LOG_USER_NEW_PASSWORD'	=> 'Сменена парола',
+	'SESSION_EXPIRED'		=> 'Изтекла сесия',
+	'SESSION_LOGED_OUT'		=> 'Разлогната сесия',
+	'LOGIN_ERROR_PASSWORD'	=> 'Въвеждане на грешна парола',
+
+	'ACTION'				=> 'Действие',
 ));
