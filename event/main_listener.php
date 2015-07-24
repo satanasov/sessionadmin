@@ -22,20 +22,25 @@ class main_listener implements EventSubscriberInterface
 			'core.session_create_after'		=>	'create_session_after',
 			'core.session_gc_after'		=>	'gc_colector',
 			'core.update_session_after'		=>	'update_session',
+			'core.login_box_failed'			=> 'login_tester',
 		);
 	}
 
 	protected $db;
 	protected $config;
 	protected $user;
+	protected $log;
+	protected $request;
 	protected $ghost_table;
 	protected $hosts_table;
-	public function __construct(\phpbb\db\driver\driver_interface $db, \phpbb\config\config $config, \phpbb\user $user,
+	public function __construct(\phpbb\db\driver\driver_interface $db, \phpbb\config\config $config, \phpbb\user $user, \phpbb\log\log $log, \phpbb\request\request $request,
 	$ghost_table, $hosts_table)
 	{
 		$this->db = $db;
 		$this->config = $config;
 		$this->user = $user;
+		$this->log = $log;
+		$this->request = $request;
 		$this->ghost_table = $ghost_table;
 		$this->hosts_table = $hosts_table;
 	}
@@ -111,5 +116,13 @@ class main_listener implements EventSubscriberInterface
 			break;
 		}
 		$this->db->sql_query($sql);
+	}
+	public function login_tester($event)
+	{
+		if ($event['result']['error_msg'] == 'LOGIN_ERROR_PASSWORD')
+		{
+			$ip = $this->request->server('REMOTE_ADDR');
+			$this->log->add('user', $event['result']['user_row']['user_id'], $ip, $event['result']['error_msg'], false, array('reportee_id' => 0));
+		}
 	}
 }

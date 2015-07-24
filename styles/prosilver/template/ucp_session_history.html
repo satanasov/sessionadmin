@@ -1,0 +1,28 @@
+<!-- INCLUDE ucp_header.html -->
+	<h2>{L_UCP_HISTORY_TITLE}</h2>
+	<div class="panel">
+		<div class="inner"><span class="corners-top"><span></span></span>
+		<p>{L_UCP_HISTORY_EXPLAIN}</p>
+		<table class="table1">
+			<thead>
+				<tr>
+					<th class="name">{L_START}</th>
+					<th class="name">{L_LAST_ACTION}</th>
+					<th class="name">{L_IP}</th>
+					<th class="name">{L_ACTION}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- BEGIN logs -->
+				<!-- IF log.S_ROW_COUNT is even --><tr class="bg1{logs.DECORATE}"><!-- ELSE --><tr class="bg2{logs.DECORATE}"><!-- ENDIF -->
+					<td>{logs.START}</td>
+					<td>{logs.TIME}</td>
+					<td>{logs.IP}</td>
+					<td>{logs.ACTION}</td>
+				</tr>
+				<!-- END logs -->
+			</tbody>
+		</table>
+		<span class="corners-bottom"><span></span></span></div>
+	</div>
+<!-- INCLUDE ucp_footer.html -->

@@ -54,6 +54,14 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 					'module_auth'        => 'ext_anavaro/sessionadmin && acl_a_user',
 				)
 			)),
+			// Add UCP Modules
+			array('module.add', array('ucp', '', 'UCP_ANAVARO_SESSION_ADMIN')),
+			array('module.add', array('ucp', 'UCP_ANAVARO_SESSION_ADMIN', array(
+				'module_basename'	=> '\anavaro\sessionadmin\ucp\ucp_main_module',
+				'module_langname'	=> 'SESSION_ADMIN',
+				'module_mode'		=> 'main',
+				'module_auth'		=> 'ext_anavaro/sessionadmin',
+			))),
 		);
 	}
 
