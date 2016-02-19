@@ -22,7 +22,7 @@ class main_listener implements EventSubscriberInterface
 			'core.session_create_after'		=>	'create_session_after',
 			'core.session_gc_after'		=>	'gc_colector',
 			'core.update_session_after'		=>	'update_session',
-			'core.page_footer_after'	=> 'collect_fingerprint',
+			//'core.page_footer_after'	=> 'collect_fingerprint',
 		);
 	}
 
@@ -54,7 +54,7 @@ class main_listener implements EventSubscriberInterface
 		// Let's first check if there are no active sessions realy 
 		if ($event['session_data']['session_user_id'] != ANONYMOUS && !$this->user->data['is_bot'])
 		{
-			$this->user->data['create_new'] = true;
+			//$this->user->data['create_new'] = true;
 			$sql = 'INSERT INTO ' . $this->ghost_table . ' ' . $this->db->sql_build_array('INSERT', $event['session_data']);
 			$this->db->sql_query($sql);
 		}

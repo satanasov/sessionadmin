@@ -103,16 +103,16 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 						'prmry'	=> array('UNIQUE', array('ip', 'hostname(255)')),
 					),
 				),
-				$this->table_prefix . 'session_fingerprint'	=> array(
+				/*$this->table_prefix . 'session_fingerprint'	=> array(
 					'COLUMNS'	=> array(
 						'user_id'	=> array('UINT', 0),
 						'fingerprint'	=> array('VCHAR:40', ''),
 						'session_start'	=> array('TIMESTAMP', 0),
 					),
 					'KEYS'	=> array(
-						'pr'	=> array('UNIQUE', array('session_start'))
+						'pr'	=> array('UNIQUE', array('session_start', 'fingerprint', 'user_id'))
 					),
-				),
+				),*/
 			),
 		);
 	}
