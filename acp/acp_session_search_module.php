@@ -46,6 +46,10 @@ class acp_session_search_module
 				{
 					trigger_error($user->lang['NO_USER'] . adm_back_link($this->u_action), E_USER_WARNING);
 				}
+				$template->assign_vars(array(
+					'SESSION_SEARCH_USER'	=> $user->lang('SESSION_SEARCH_USER_BASE', $username),
+				));
+				$this->page_title = $user->lang('SESSION_SEARCH_USER_BASE', $username);
 			case 'userid':
 				if (!isset($user_id))
 				{
@@ -55,7 +59,13 @@ class acp_session_search_module
 						trigger_error('USERID_MISSING', E_USER_WARNING);
 					}
 				}
-
+				if (!isset($username))
+				{
+					$template->assign_vars(array(
+						'SESSION_SEARCH_USER'	=> $user->lang('SESSION_SEARCH_ID_BASE', $user_id),
+					));
+					$this->page_title = $user->lang('SESSION_SEARCH_ID_BASE', $user_id);
+				}
 				// We are not going to build advanced request (users per user IP) as it takes to much time and rescources. 
 				// So we will do simple request - all IPs for user, then we can manualy check every IP
 				$sql = 'SELECT DISTINCT(session_ip) FROM ' . $table_prefix . 'session_ghost WHERE session_user_id = ' . $user_id . ' ORDER BY session_time DESC';
@@ -93,6 +103,10 @@ class acp_session_search_module
 					trigger_error('USERIP_MISSING', E_USER_WARNING);
 				}
 
+				$template->assign_vars(array(
+					'SESSION_SEARCH'	=> $user->lang('SESSION_SEARCH_IP_BASE', $user_ip),
+				));
+				$this->page_title = $user->lang('SESSION_SEARCH_IP_BASE', $user_ip);
 				// Let's get unique user IDs for this IP
 				$sql = 'SELECT DISTINCT(session_user_id) as user_id FROM ' . $table_prefix . 'session_ghost WHERE session_ip = \'' . $user_ip . '\' ORDER BY session_time DESC';
 				$result = $db->sql_query($sql);

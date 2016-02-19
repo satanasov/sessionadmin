@@ -1,12 +1,11 @@
 <?php
 /**
 *
-* @package Anavaro.com Session Admin
+* @package Anavaro.com PM Search
 * @copyright (c) 2013 Lucifer
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
-
 /**
 * @ignore
 */
@@ -22,7 +21,6 @@ class acp_session_storage_module
 		global $db, $user, $template, $config, $request, $cache, $phpbb_container, $table_prefix, $phpbb_root_path;
 		$db_tools = $phpbb_container->get('dbal.tools');
 		$this->tpl_name		= 'acp_session_storage';
-		$this->page_title = 'SESSION_STORAGE_TITLE';
 		$config_text = $phpbb_container->get('config_text');
 
 		// Let's see the file structure
@@ -68,12 +66,6 @@ class acp_session_storage_module
 		$image = array(
 			'search'	=> '<img src="' . $phpbb_root_path . 'ext/anavaro/sessionadmin/adm/images/spyglass.png">',
 		);
-
-		// Add some variables
-		$template->assign_vars(array(
-			'TITLE'	=> $user->lang('SESSION_STORAGE_TITLE'),
-			'EXPLAIN'	=> $user->lang('SESSION_STORAGE_EXPLAIN'),
-		));
 
 		// Furst update vars
 		$sa_per_run = $request->variable('perrun', 0);

@@ -1,12 +1,11 @@
 <?php
 /**
 *
-* @package Anavaro.com Session admin
+* @package Anavaro.com PM Search
 * @copyright (c) 2013 Lucifer
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
-
 /**
 * @ignore
 */
@@ -22,17 +21,11 @@ class acp_session_active_module
 		global $db, $user, $template, $config, $request, $table_prefix, $phpbb_root_path;
 
 		$this->tpl_name		= 'acp_session_active';
-		$this->page_title = 'SESSION_ACTIVE_TITLE';
 		// Let's define image
 		$image = array(
 			'search'	=> '<img src="' . $phpbb_root_path . 'ext/anavaro/sessionadmin/adm/images/spyglass.png">',
 		);
 
-		// Add some variables
-		$template->assign_vars(array(
-			'TITLE'	=> $user->lang('SESSION_ACTIVE_TITLE'),
-			'EXPLAIN'	=> $user->lang('SESSION_ACTIVE_EXPLAIN'),
-		));
 		$ouptut = $users = array();
 		$sql = 'SELECT * FROM phpbb_session_ghost WHERE session_page NOT LIKE \'expired\' AND session_page NOT LIKE \'ucp.php?mode=logout\' ORDER BY session_time DESC';
 		$result = $db->sql_query($sql);

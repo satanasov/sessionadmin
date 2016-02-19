@@ -1,6 +1,7 @@
 parameters:
     tables.sessionghost: %core.table_prefix%session_ghost
     tables.sessionhost: %core.table_prefix%sessions_host
+    tables.sessionfingerprint: %core.table_prefix%session_fingerprint
 
 services:
     anavaro.sessionadmin.events:
@@ -9,9 +10,15 @@ services:
             - @dbal.conn
             - @config
             - @user
-            - @log
-            - @request
+            - @template
+            - @controller.helper
             - %tables.sessionghost%
             - %tables.sessionhost%
         tags:
             - { name: event.listener }
+    anavaro.sessionadmin.input:
+        class: anavaro\sessionadmin\controller\input
+        arguments:
+            - @dbal.conn
+            - @user
+            - %tables.sessionfingerprint%

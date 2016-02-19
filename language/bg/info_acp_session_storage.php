@@ -23,8 +23,8 @@ if (empty($lang) || !is_array($lang))
 }
 
 $lang = array_merge($lang, array(
-	'SESSION_STORAGE_TITLE'				=> 'Session admin Cold storage',
-	'SESSION_STORAGE_EXPLAIN'			=> 'As storage admin logs all user sessions it generates a lot of overhead regarding database entries. To simplify things - use this to put older entries in "cold storage" (put them in files and away from database). You could download the cold storage entries from here.',
+	'TITLE'				=> 'Session admin Cold storage',
+	'EXPLAIN'			=> 'As storage admin logs all user sessions it generates a lot of overhead regarding database entries. To simplify things - use this to put older entries in "cold storage" (put them in files and away from database). You could download the cold storage entries from here.',
 
 	'SESSION_ARCHIVE'	=> 'Archive settings',
 	'TOTAL_RECORDS'		=> 'Total records',

@@ -54,14 +54,6 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 					'module_auth'        => 'ext_anavaro/sessionadmin && acl_a_user',
 				)
 			)),
-			// Add UCP Modules
-			array('module.add', array('ucp', '', 'UCP_ANAVARO_SESSION_ADMIN')),
-			array('module.add', array('ucp', 'UCP_ANAVARO_SESSION_ADMIN', array(
-				'module_basename'	=> '\anavaro\sessionadmin\ucp\ucp_main_module',
-				'module_langname'	=> 'SESSION_ADMIN',
-				'module_mode'		=> 'main',
-				'module_auth'		=> 'ext_anavaro/sessionadmin',
-			))),
 		);
 	}
 
@@ -111,6 +103,16 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 						'prmry'	=> array('UNIQUE', array('ip', 'hostname(255)')),
 					),
 				),
+				$this->table_prefix . 'session_fingerprint'	=> array(
+					'COLUMNS'	=> array(
+						'user_id'	=> array('UINT', 0),
+						'fingerprint'	=> array('VCHAR:40', ''),
+						'session_start'	=> array('TIMESTAMP', 0),
+					),
+					'KEYS'	=> array(
+						'pr'	=> array('UNIQUE', array('session_start'))
+					),
+				),
 			),
 		);
 	}
@@ -121,6 +123,7 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 				//$this->table_prefix . 'session_ghost',
 				//$this->table_prefix . 'session_archive',
 				//$this->table_prefix . 'sessions_host',
+				//$this->table_prefix . 'session_fingerprint',
 			),
 		);
 	}
