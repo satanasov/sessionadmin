@@ -30,7 +30,7 @@ class input
 
 	public function base ($key)
 	{
-		if (!$this->user->data['is_bot'] && $this->user->data['user_id'] != ANONYMOUS)
+		if (!$this->user->data['is_bot'] && $this->user->data['user_id'] != ANONYMOUS && $key !== 0)
 		{
 			$sql = 'INSERT INTO ' . $this->fingerprint_table . ' (user_id, fingerprint, session_start) VALUES (' . $this->user->data['user_id'] . ', \'' . $key .'\', ' . $this->user->data['session_start'] . ')';
 			$this->db->sql_query($sql);
