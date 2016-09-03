@@ -76,11 +76,12 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 						'session_viewonline'	=> array('BOOL', 1),
 						'session_autologin'	=> array('BOOL', 0),
 						'session_admin'	=> array('BOOL', 0),
+						'session_forum_id' => array('UINT', 0),
 					),
 					'PRIMARY_KEY'	=> 'session_id',
 					'KEYS'	=> array(
-						'session_time'	=> array('INDEX', 'session_time'),
-						'session_user_id'	=> array('INDEX', 'session_user_id'),
+//						'session_time'	=> array('INDEX', 'session_time'),
+//						'session_user_id'	=> array('INDEX', 'session_uid'),
 					),
 				),
 				$this->table_prefix . 'session_archive'	=> array(
@@ -120,10 +121,10 @@ class release_1_0_0 extends \phpbb\db\migration\migration
 	{
 		return array(
 			'drop_tables'		=> array(
-				//$this->table_prefix . 'session_ghost',
-				//$this->table_prefix . 'session_archive',
-				//$this->table_prefix . 'sessions_host',
-				//$this->table_prefix . 'session_fingerprint',
+				$this->table_prefix . 'session_ghost',
+				$this->table_prefix . 'session_archive',
+				$this->table_prefix . 'sessions_host',
+//				$this->table_prefix . 'session_fingerprint',
 			),
 		);
 	}
