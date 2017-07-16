@@ -32,7 +32,7 @@ class input
 	{
 		if (!$this->user->data['is_bot'] && $this->user->data['user_id'] != ANONYMOUS && $key !== 0)
 		{
-			$sql = 'INSERT INTO ' . $this->fingerprint_table . ' (user_id, fingerprint, session_start) VALUES (' . $this->user->data['user_id'] . ', \'' . $key .'\', ' . $this->user->data['session_start'] . ')';
+			$sql = 'INSERT INTO ' . $this->fingerprint_table . ' (user_id, fingerprint, session_start) VALUES (' . $this->user->data['user_id'] . ', \'' . $this->db->sql_escape($key) .'\', ' . $this->user->data['session_start'] . ')';
 			$this->db->sql_query($sql);
 			return new \Symfony\Component\HttpFoundation\JsonResponse(array(
 				'result'	=> 'OK'
