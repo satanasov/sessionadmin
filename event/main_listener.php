@@ -121,6 +121,7 @@ class main_listener implements EventSubscriberInterface
 		{
 			case 'mysql4':
 			case 'mysql':
+			case 'mysqli':
 			case 'mssql':
 			case 'mssqlnative':
 			case 'oracle':
