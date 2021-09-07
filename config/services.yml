@@ -21,6 +21,6 @@ services:
     anavaro.sessionadmin.input:
         class: anavaro\sessionadmin\controller\input
         arguments:
-            - @dbal.conn
-            - @user
-            - %tables.sessionfingerprint%
+            - '@dbal.conn'
+            - '@user'
+            - '%tables.sessionfingerprint%'
