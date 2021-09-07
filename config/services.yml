@@ -7,15 +7,15 @@ services:
     anavaro.sessionadmin.events:
         class: anavaro\sessionadmin\event\main_listener
         arguments:
-            - @dbal.conn
-            - @config
-            - @user
-            - @template
-            - @log
-            - @request
-            - @controller.helper
-            - %tables.sessionghost%
-            - %tables.sessionhost%
+            - '@dbal.conn'
+            - '@config'
+            - '@user'
+            - '@template'
+            - '@log'
+            - '@request'
+            - '@controller.helper'
+            - '%tables.sessionghost%'
+            - '%tables.sessionhost%'
         tags:
             - { name: event.listener }
     anavaro.sessionadmin.input:
